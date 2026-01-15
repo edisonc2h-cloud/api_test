@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 import usersModule from './modules/users/module.js';
 import productsModule from './modules/products/module.js';
+import clientsModule from './modules/clients/module.js';
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,13 @@ try {
   console.log('Módulo de productos registrado');
 } catch (error) {
   console.error('Error al registrar módulo de productos:', error);
+}
+
+try {
+  clientsModule(app);
+  console.log('Módulo de clientes registrado');
+} catch (error) {
+  console.error('Error al registrar módulo de clientes:', error);
 }
 
 const PORT = 3000;
