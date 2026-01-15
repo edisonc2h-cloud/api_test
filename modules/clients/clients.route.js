@@ -10,6 +10,14 @@ const model = {
   create: async (data) => {
     const client = await Client.create(data);
     return client;
+  },
+  update: async (id, data) => {
+    const client = await Client.findByIdAndUpdate(id, data, {new: true});
+    return client;
+  },
+  delete: async (id) => {
+    const client = await Client.findByIdAndDelete(id);
+    return client;
   }
 };
 routes(app, '/clients', model);

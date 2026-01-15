@@ -10,6 +10,14 @@ const model = {
   create: async (data) => {
     const user = await User.create(data);
     return user;
+  },
+  update: async (id, data) => {
+    const user = await User.findByIdAndUpdate(id, data, {new: true});
+    return user;
+  },
+  delete: async (id) => {
+    const user = await User.findByIdAndDelete(id);
+    return user;
   }
 };
 routes(app, '/users', model);
