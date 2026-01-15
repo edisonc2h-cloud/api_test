@@ -6,6 +6,10 @@ const model = {
   find: async (query, params) => {
     const clients = await Client.find(query).limit(params.limit);
     return clients;
+  },
+  create: async (data) => {
+    const client = await Client.create(data);
+    return client;
   }
 };
 routes(app, '/clients', model);
