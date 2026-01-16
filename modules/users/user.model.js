@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import model from '../core/model.js';
+import user_validator from './users.validator.js';
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -8,6 +9,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const mongoose_model = mongoose.model('User', userSchema);
-const users_model = model(mongoose_model);
+const users_model = model(mongoose_model, user_validator);
 
 export default users_model;

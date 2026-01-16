@@ -3,5 +3,11 @@ import users_model from './user.model.js';
 
 
 export default (app) => {
-routes(app, '/users', users_model);
+  const instance_route = routes(app, '/users', users_model);
+  instance_route.setup({
+    get: true, 
+    create: true, 
+    update: true, 
+    delete: true
+  });
 };

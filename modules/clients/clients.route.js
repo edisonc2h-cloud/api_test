@@ -2,5 +2,11 @@ import routes from '../core/routes.js';
 import clients_model from './client.model.js';
 
 export default (app) => {
-routes(app, '/clients', clients_model);
+const instance_route = routes(app, '/clients', clients_model);
+instance_route.setup({
+    get: true, 
+    create: true, 
+    update: true, 
+    delete: true 
+  });
 };
