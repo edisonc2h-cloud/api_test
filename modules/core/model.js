@@ -3,7 +3,7 @@ import validateData from './validator.js';
 export default (model, validator) => {
   return {
     find: async (query, params) => {
-      const data = await model.find(query).limit(params.limit);
+      const data = await model.find(query).limit(params.limit).select(params.select);
       return data;
     },
     create: async (data) => {

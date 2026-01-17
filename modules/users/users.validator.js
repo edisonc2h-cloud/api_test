@@ -4,7 +4,6 @@ export default {
 };
 
 function check_length(value) {
-    console.log(value.length)
     if (value.length < 10 || value.length > 100) {
         throw 'email no cumple longitud';
     }
@@ -12,7 +11,7 @@ function check_length(value) {
 
 function check_format(value) {
     if (value.indexOf('@') < 0) {
-        throw 'Formato incorrecto';
+        throw 'Formato incorrecto de correo';
     }
 }
 

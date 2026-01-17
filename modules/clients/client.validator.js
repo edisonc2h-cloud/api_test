@@ -4,7 +4,6 @@ export default {
 };
 
 function check_length(value) {
-    console.log(value.length)
     if (value.length < 10 || value.length > 100) {
         throw 'email no cumple longitud';
     }
