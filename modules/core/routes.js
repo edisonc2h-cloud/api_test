@@ -1,4 +1,9 @@
+import permissionsModule from './permissions.js';
+
 export default (app, path, model, permissions) => {
+
+    const permissionsHandler = permissionsModule(permissions || {});
+    
     return {
         setup: (operation) => {
             if (operation.get === true) {
@@ -7,25 +12,25 @@ export default (app, path, model, permissions) => {
                         const {limit, select, ...query} = req.query;
                         let allowedSelect = select;
                         
-                        if (permissions.get) {
-                            console.log(query)
+                        if (Object.keys(query).length > 0) {
                             const queryFields = Object.keys(query);
-                            const invalidFields = queryFields.filter(field => !permissions.get.includes(field));
+                            const validation = permissionsHandler.validateFields('get', queryFields);
                             
-                            if (invalidFields.length > 0) {
-                                throw (`Campos no permitidos en la consulta: ${invalidFields.join(', ')}`);
+                            if (!validation.valid) {
+                                throw validation.error;
                             }
+                        }
 
-                            if (select) {
-                                console.log(select)
-                                const selectFields = select.split(/\s+/).filter(f => f.trim());
-                                const invalidSelectFields = selectFields.filter(field => !permissions.get.includes(field));
-                                
-                                if (invalidSelectFields.length > 0) {
-                                    throw (`Campos no permitidos en select: ${invalidSelectFields.join(', ')}`);
-                                }
-                            }
+                        if (select) {
+                            const selectFields = select.split(/\s+/).filter(f => f.trim());
+                            const validation = permissionsHandler.validateFields('get', selectFields);
                             
+                            if (!validation.valid) {
+                                throw validation.error;
+                            }
+                        }
+                        
+                        if (permissions && permissions.get) {
                             allowedSelect = select || permissions.get.join(' ');
                         }
                         
@@ -41,13 +46,11 @@ export default (app, path, model, permissions) => {
             if (operation.create === true) {
                 app.post(path, async (req, res) => {
                     try {
-                        if (permissions.create) {
-                            const bodyFields = Object.keys(req.body);
-                            const invalidFields = bodyFields.filter(field => !permissions.create.includes(field));
-                            
-                            if (invalidFields.length > 0) {
-                                throw (`Campos no permitidos en el body: ${invalidFields.join(', ')}`);
-                            }
+                        const bodyFields = Object.keys(req.body);
+                        const validation = permissionsHandler.validateFields('create', bodyFields);
+                        
+                        if (!validation.valid) {
+                            throw validation.error;
                         }
                         
                         const data = await model.create(req.body);
@@ -61,13 +64,11 @@ export default (app, path, model, permissions) => {
             if (operation.update === true) {
                 app.put(`${path}/:id`, async (req, res) => {
                     try {
-                        if (permissions.update) {
-                            const bodyFields = Object.keys(req.body);
-                            const invalidFields = bodyFields.filter(field => !permissions.update.includes(field));
-                            
-                            if (invalidFields.length > 0) {
-                                throw (`Campos no permitidos en el body: ${invalidFields.join(', ')}`);
-                            }
+                        const bodyFields = Object.keys(req.body);
+                        const validation = permissionsHandler.validateFields('update', bodyFields);
+                        
+                        if (!validation.valid) {
+                            throw validation.error;
                         }
                         
                         const {id} = req.params;

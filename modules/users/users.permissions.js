@@ -1,5 +1,5 @@
 export default {
-    get: ['name'],
+    get: ['name','email'],
     create: ['name', 'email', 'active'],
     update: ['name']
 }
