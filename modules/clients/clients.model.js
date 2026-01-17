@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import model from '../core/model.js';
-import client_validator from './client.validator.js';
+import client_validator from './clients.validator.js';
 
 const clientSchema = new mongoose.Schema({
   name: String,

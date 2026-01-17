@@ -1,5 +1,5 @@
 import routes from '../core/routes.js';
-import products_model from './product.model.js';
+import products_model from './products.model.js';
 import products_permissions from './products.permissions.js';
 
 export default (app) => {

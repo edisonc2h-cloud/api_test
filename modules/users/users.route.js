@@ -1,5 +1,5 @@
 import routes from '../core/routes.js';
-import users_model from './user.model.js';
+import users_model from './users.model.js';
 import users_permissions from './users.permissions.js';
 
 

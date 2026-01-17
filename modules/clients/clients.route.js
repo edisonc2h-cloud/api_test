@@ -1,5 +1,5 @@
 import routes from '../core/routes.js';
-import clients_model from './client.model.js';
+import clients_model from './clients.model.js';
 
 export default (app) => {
 const instance_route = routes(app, '/clients', clients_model, {});
