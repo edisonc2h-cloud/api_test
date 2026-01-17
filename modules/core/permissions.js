@@ -15,10 +15,6 @@ export default (permissions) => {
             }
             
             return { valid: true };
-        },
-        
-        getAllowedFields: (operation) => {
-            return permissions[operation] || [];
         }
     };
 };
